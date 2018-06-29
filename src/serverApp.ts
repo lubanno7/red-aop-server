@@ -43,7 +43,11 @@ export class ServerApplication extends Application {
      * @param port 端口
      * @param services 服务列表
      */
-    constructor(public port?: number, public services?: ServiceInfo[], public servers?: ServerInfo[]) {
+    constructor(
+        public port?: number,
+        public services?: ServiceInfo[],
+        public servers?: ServerInfo[],
+        public staticPath?: string) {
         super();
         // 端口默认3000
         this.port = port || 3000;

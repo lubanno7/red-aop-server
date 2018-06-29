@@ -23,7 +23,7 @@ export class ExpressApplication extends ServerApplication {
         expressApp = app;
 
         // 静态目录设定
-        app.use(express.static(path.join(__dirname, '../../../build')));
+        app.use(express.static(path.join(__dirname, !this.staticPath ? '../../../build' : this.staticPath)));
 
         // 过滤服务文件夹,不能通过get请求访问
         app.use(function (req: express.Request, res: express.Response, next: express.NextFunction) {
