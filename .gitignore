@@ -1,0 +1,14 @@
+# tip
+#   修改该文件后需要手动执行"git rm -r --cached ."和"git add ."
+#   两个命令进行本地文件索引的重新绑定，最后再上传服务器
+
+# typescript generation file
+*.js
+*.js.map
+
+# vscode 
+.vscode/symbols.json
+
+# node_modules
+/dist/
+/node_modules/
