@@ -7,7 +7,7 @@
 *.js.map
 
 # vscode 
-.vscode/setting.json
+.vscode/settings.json
 .vscode/symbols.json
 
 # node_modules
