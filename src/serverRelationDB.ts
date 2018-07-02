@@ -10,6 +10,7 @@ const defaultDatabaseName = 'default';
 
 /**
  * 数据过滤器接口
+ * @author huyl
  */
 export interface IRelationDataFilter {
     /**
@@ -29,6 +30,7 @@ export interface IRelationDataFilter {
 
 /**
  * 数据过滤器
+ * @author huyl
  */
 @addon('BaseRelationDataFilter', '数据过滤器', '数据过滤器')
 export class BaseRelationDataFilter extends BaseAddon implements IRelationDataFilter {
@@ -140,6 +142,7 @@ export class BaseRelationDataFilter extends BaseAddon implements IRelationDataFi
 
 /**
  * AND逻辑运算过滤器
+ * @author huyl
  */
 @addon('AndRelationDataFilter', 'AND逻辑运算过滤器', 'AND逻辑运算过滤器')
 export class AndRelationDataFilter extends BaseRelationDataFilter implements IRelationDataFilter {
@@ -150,6 +153,7 @@ export class AndRelationDataFilter extends BaseRelationDataFilter implements IRe
 
 /**
  * OR逻辑运算过滤器
+ * @author huyl
  */
 @addon('OrRelationDataFilter', 'OR逻辑运算过滤器', 'OR逻辑运算过滤器')
 export class OrRelationDataFilter extends BaseRelationDataFilter implements IRelationDataFilter {
@@ -160,6 +164,7 @@ export class OrRelationDataFilter extends BaseRelationDataFilter implements IRel
 
 /**
  * SQL语句过滤器
+ * @author huyl
  */
 @addon('SqlRelationDataFilter', 'SQL语句过滤器', 'SQL语句过滤器')
 export class SqlRelationDataFilter extends BaseAddon implements IRelationDataFilter {
@@ -206,6 +211,7 @@ export class SqlRelationDataFilter extends BaseAddon implements IRelationDataFil
 
 /**
  * 数据命令
+ * @author huyl
  */
 @addon('RelationDataCommand', '数据命令', '数据命令')
 export class RelationDataCommand extends BaseAddon {
@@ -265,6 +271,7 @@ export class RelationDataCommand extends BaseAddon {
 
 /**
  * 数据连接对象
+ * @author huyl
  */
 @addon('DatabaseConnection', '数据库连接对象', '数据库连接对象')
 export class DatabaseConnection extends BaseAddon {
@@ -303,6 +310,7 @@ export class DatabaseConnection extends BaseAddon {
 
 /**
  * 关系型数据服务
+ * @author huyl
  */
 @addon('RelationDataService', '关系型数据服务', '操作关系型数据库,实现数据操作的服务')
 export class RelationDataService extends BaseService implements IDataService {

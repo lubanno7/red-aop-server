@@ -1,6 +1,5 @@
 import { ServiceInfo, registerServices, ServerInfo, registerServers } from './serverBase';
-import { addon, Application } from 'red-aop';
-
+import { addon, Application, log } from 'red-aop';
 /**
  * 主应用程序
  */
@@ -9,6 +8,7 @@ export let mainApplication: ServerApplication;
 /**
  * 名称:应用Session配置
  * @description 用于配置服务应用的Session
+ * @author huyl
  */
 export class AppSession {
     /**
@@ -30,6 +30,7 @@ export class AppSession {
 
 /**
  * 服务应用
+ * @author pao
  */
 @addon('ServerApplication', '服务应用设置', '包含各种资源的主服务应用实体对象')
 export class ServerApplication extends Application {
@@ -43,17 +44,15 @@ export class ServerApplication extends Application {
      * @param port 端口
      * @param services 服务列表
      */
-    constructor(
-        public port?: number,
-        public services?: ServiceInfo[],
-        public servers?: ServerInfo[],
-        public staticPath?: string) {
+    constructor(public port?: number, public services?: ServiceInfo[], public servers?: ServerInfo[]) {
         super();
         // 端口默认3000
         this.port = port || 3000;
 
-        for (let device of services) {
-            this.serviceList.set(device.serviceName, device.serviceObject);
+        if (services) {
+            for (let device of services) {
+                this.serviceList.set(device.serviceName, device.serviceObject);
+            }
         }
     }
 
@@ -93,10 +92,11 @@ export class ServerApplication extends Application {
         super.run();
         mainApplication = this;
 
+        log('app', '开始注册服务');
         this.registerServices();
-
+        log('app', '开始启动服务器');
         this.runServers();
-
+        log('app', '开始启动应用程序');
         this.startApplication();
     }
 }

@@ -1,6 +1,6 @@
-﻿import { MongoClient, InsertWriteOpResult, WriteOpResult } from 'mongodb';
-import { BaseService } from './serverBase';
+﻿import { BaseService } from './serverBase';
 import { addon, BaseAddon, extend, IDataService } from 'red-aop';
+import { MongoClient, WriteOpResult, InsertWriteOpResult, Db } from 'typeorm';
 
 /** 时间匹配正则表达式 */
 export const DATE_REGEXP = /\$Date\$/;
@@ -34,6 +34,7 @@ export interface IMongoDataFilter {
 /**
  * 名称:过滤器
  * @description 用于描述Mongo数据操作的过滤器
+ * @author huyl
  */
 @addon('BaseMongoDataFilter', 'Mongo过滤器基类', '用于描述Mongo数据操作的过滤器')
 export class BaseMongoDataFilter extends BaseAddon implements IMongoDataFilter {
@@ -81,6 +82,7 @@ export class BaseMongoDataFilter extends BaseAddon implements IMongoDataFilter {
 /**
  * 名称:And逻辑过滤器
  * @description 用于描述 Mongo 数据操作 AND 逻辑过滤器
+ * @author huyl
  */
 @addon('AndMongoDataFilter', 'And逻辑过滤器', '用于描述 Mongo 数据操作 AND 逻辑过滤器')
 export class AndMongoDataFilter extends BaseMongoDataFilter {
@@ -100,6 +102,7 @@ export class AndMongoDataFilter extends BaseMongoDataFilter {
 /**
  * 名称:Or逻辑过滤器
  * @description 用于描述 Mongo 数据操作 OR 逻辑过滤器
+ * @author huyl
  */
 @addon('OrMongoDataFilter', 'Or逻辑过滤器', '用于描述 Mongo 数据操作 OR 逻辑过滤器')
 export class OrMongoDataFilter extends BaseMongoDataFilter {
@@ -120,6 +123,7 @@ export class OrMongoDataFilter extends BaseMongoDataFilter {
 /**
  * 名称:字符串条件语句
  * @description 用于Mongo数据操作条件的最基础的语句
+ * @author huyl
  */
 @addon('StringMongoDataFilter', '字符串条件语句', '用于Mongo数据操作条件的最基础的语句')
 export class StringMongoDataFilter extends BaseMongoDataFilter {
@@ -173,6 +177,7 @@ export class StringMongoDataFilter extends BaseMongoDataFilter {
 /**
  * 名称:命令
  * @description 用于描述Mongo数据操作的命令
+ * @author huyl
  */
 @addon('BaseMongoCommand', '命令', '用于描述Mongo数据操作的命令')
 export class BaseMongoCommand extends BaseAddon {
@@ -197,13 +202,10 @@ export class BaseMongoCommand extends BaseAddon {
 /**
  * 名称:Mongo DB 连接池
  * @description 用于操作Mongo DB连接信息的对象
+ * @author huyl
  */
 @addon('MongoConnectionPool', 'Mongo DB 连接池', '用于操作Mongo DB连接信息的对象')
 export class MongoConnectionPool extends BaseAddon {
-    /** Mongo DB 连接池 */
-    constructor(protected conn: ConnectionOption | string, protected database?: string) {
-        super();
-    }
     /** 连接信息 */
     protected get uri(): string {
         if (typeof this.conn === 'object') {
@@ -217,7 +219,7 @@ export class MongoConnectionPool extends BaseAddon {
         return undefined;
     }
     /** 创建连接 */
-    public get connection() {
+    public get connection(): Promise<Db> {
         return MongoClient.connect(this.uri);
     }
     /** 获取数据库名称 */
@@ -228,11 +230,16 @@ export class MongoConnectionPool extends BaseAddon {
                 ? this.conn.database
                 : undefined;
     }
+    /** Mongo DB 连接池 */
+    constructor(protected conn: ConnectionOption | string, protected database?: string) {
+        super();
+    }
 }
 
 /**
  * 名称:Mongo DB 数据存储
  * @description 完成Mongo DB主要增删查改等操作
+ * @author huyl
  */
 @addon('MongoStorage', 'Mongo DB 数据存储', '完成Mongo DB主要增删查改等操作')
 export class MongoStorage extends BaseAddon {
@@ -360,6 +367,7 @@ export class MongoStorage extends BaseAddon {
 /**
  * 名称:Mongo 数据查询服务
  * @description 提供Mongo数据库查询的服务
+ * @author huyl
  */
 @addon('MongoQueryService', 'Mongo 数据服务', '提供Mongo数据库查询的服务')
 export class MongoQueryService extends BaseService implements IDataService {

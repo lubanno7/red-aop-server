@@ -5,12 +5,13 @@ import { addon, log } from 'red-aop';
 /**
  * 名称:Socket 服务
  * @description 提供Socket透明传输的服务
+ * @author pao
  */
 @addon('SocketServer', 'Socket 服务', '提供Socket透明传输的服务')
 export class SocketServer extends BaseServer {
     private tcp: TCP.Server;
 
-    constructor(public port?: number) {
+    constructor(public port?: number, public hostName?: string) {
         super();
     }
 
@@ -22,9 +23,8 @@ export class SocketServer extends BaseServer {
                 this.connected(socket);
             }
         });
-        this.tcp.listen(this.port, () => {
-            log('net', `服务器开始在端口${this.port}监听`);
-        });
+        this.tcp.listen(this.port, this.hostName);
+        log('net', `TCP服务器开始在端口${this.hostName} : ${this.port}监听`);
     }
 
     stop?(): void {

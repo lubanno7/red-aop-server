@@ -1,6 +1,6 @@
 {
   "name": "red-aop-server",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "Service framework based on red-aop.",
   "keywords": [
     "aop",

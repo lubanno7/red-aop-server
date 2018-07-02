@@ -20,6 +20,7 @@ export let securityOrPublicKey: string = 'shhhhh';
 
 /**
  * 验证当前用户令牌
+ * @author pao
  * @param user 用户
  */
 export function verify(tokenString: string): UserToken {
@@ -29,6 +30,7 @@ export function verify(tokenString: string): UserToken {
 
 /**
  * 签名并生成令牌
+ * @author pao
  */
 export function sign(userToken: UserToken): string {
     return jwt.sign(userToken, securityOrPrivateKey);
@@ -36,6 +38,7 @@ export function sign(userToken: UserToken): string {
 
 /**
  * 设置当前用户令牌
+ * @author pao
  * @param tokenString 用户令牌
  */
 export function setCurrentUserToken(tokenString: string) {
@@ -54,6 +57,7 @@ export function setCurrentUserToken(tokenString: string) {
 
 /**
  * 用户信息
+ * @author pao
  */
 export class UserInfo {
     userName: string;
@@ -64,6 +68,7 @@ export class UserInfo {
 
 /**
  * 用户名密码登录服务
+ * @author pao
  */
 @addon('UserPasswordLoginService', '用户名密码登录服务', '通过用户名密码登录的服务')
 export class UserPasswordLoginService extends BaseAddon implements ILoginService {

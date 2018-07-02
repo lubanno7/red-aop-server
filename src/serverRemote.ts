@@ -13,6 +13,7 @@ import {
 
 /**
  * 请求
+ * @author pao
  * @param token 令牌
  * @param remoteRequest 远程请求
  * @returns 远程调用方法的结果
@@ -36,6 +37,7 @@ export function request(token: string, request: IRemoteRequest): any {
 
 /**
  * 远程调用服务响应
+ * @author pao
  * @param req 请求
  * @param res 响应
  */
