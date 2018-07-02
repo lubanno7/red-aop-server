@@ -39,21 +39,21 @@ export {
     TokenAuth,
     BaseService,
     BaseServer
-}
+};
 
 /**
  * 2、导出server app模块
  */
 import { AppSession, ServerApplication } from "./src/serverApp";
 
-export { AppSession, ServerApplication }
+export { AppSession, ServerApplication };
 
 /**
  * 3、导出exprss app模块
  */
 import { ExpressApplication, expressApp } from "./src/expressApp";
 
-export { ExpressApplication, expressApp }
+export { ExpressApplication, expressApp };
 
 /**
  * 4、导出serverObjectDB 模块
@@ -84,7 +84,7 @@ export {
     MongoConnectionPool,
     MongoStorage,
     MongoQueryService
-}
+};
 
 /**
  * 5、导出serverRelationDB模块
@@ -109,7 +109,7 @@ export {
     RelationDataCommand,
     DatabaseConnection,
     RelationDataService
-}
+};
 
 /**
  * 6、导出serverRemote模块
@@ -122,7 +122,7 @@ import {
 export {
     request,
     remoteCallServiceHandler
-}
+};
 
 /**
  * 7、导出serverSecurity模块
@@ -141,11 +141,11 @@ export {
     setCurrentUserToken,
     UserInfo,
     UserPasswordLoginService
-}
+};
 
 /**
  * 8、导出server socket模块
  */
 import { SocketServer } from "./src/serverSocket";
 
-export { SocketServer }
+export { SocketServer };
