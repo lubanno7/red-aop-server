@@ -1,6 +1,6 @@
 {
   "name": "red-aop-server",
-  "version": "0.0.2",
+  "version": "0.0.4",
   "description": "Service framework based on red-aop.",
   "keywords": [
     "aop",
@@ -43,7 +43,7 @@
     "net": "^1.0.2",
     "path": "^0.12.7",
     "react": "^16.4.1",
-    "red-aop": "^1.1.6",
+    "red-aop": "^1.1.17",
     "reflect-metadata": "^0.1.12",
     "typeorm": "^0.2.7"
   },

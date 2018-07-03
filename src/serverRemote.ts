@@ -4,11 +4,11 @@ import { GlobalServices, BaseService } from './serverBase';
 import { Buffer } from 'buffer';
 import {
     IRemoteRequest,
-    throwError,
-    ErrorStatus,
     log,
     addonDeserialize,
-    addonSerialize
+    addonSerialize,
+    throwError,
+    ErrorStatus
 } from 'red-aop';
 
 /**
