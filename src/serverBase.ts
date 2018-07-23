@@ -16,7 +16,6 @@ const defaultFileEncoding = 'utf-8';
 
 /**
  * 移除文件中的BOM
- * @author pao
  * @param bin
  */
 export function removeBOM(bin: Buffer) {
@@ -28,7 +27,6 @@ export function removeBOM(bin: Buffer) {
 
 /**
  * 保存
- * @author pao
  * @param filePath 文件路径
  */
 export function saveObject(filePath: string, obj: Object): void {
@@ -40,7 +38,6 @@ export function saveObject(filePath: string, obj: Object): void {
 
 /**
  * 读取
- * @author pao
  * @param filePath 文件路径
  */
 export function loadObject(filePath: string): Object {
@@ -57,7 +54,6 @@ export function loadObject(filePath: string): Object {
 
 /**
  * 准备配置
- * @author pao
  * @param defaultConfig 默认配置对象
  * @param configFile 配置文件
  * @param loadConfig 是否从配置文件加载
@@ -83,7 +79,6 @@ export function prepareConfig(
 
 /**
  * 全局服务器列表
- * @author pao
  */
 export class GlobalServers {
 
@@ -91,7 +86,6 @@ export class GlobalServers {
 
 /**
  * 服务信息: 包含服务名称和服务对象的信息
- * @author pao
  */
 @addon('ServerInfo', '服务信息', '包含服务名称和服务对象的信息')
 export class ServerInfo {
@@ -103,7 +97,6 @@ export class ServerInfo {
 }
 /**
  * 注册服务列表
- * @author pao
  * @param serverInfos 服务信息列表
  */
 export function registerServers(serverInfos: ServerInfo[]) {
@@ -113,7 +106,6 @@ export function registerServers(serverInfos: ServerInfo[]) {
 }
 /**
  * 注册服务
- * @author pao
  * @param serverInfo 服务信息
  */
 export function registerServer(serverInfo: ServerInfo) {
@@ -124,7 +116,6 @@ export function registerServer(serverInfo: ServerInfo) {
 }
 
 /** 根据名称获取服务
- * @author pao
  * @param name 名称
  */
 export function getServerByName(name: string) {
@@ -133,7 +124,6 @@ export function getServerByName(name: string) {
 
 /**
  * 全局服务列表
- * @author pao
  */
 export class GlobalServices {
 
@@ -141,7 +131,6 @@ export class GlobalServices {
 
 /**
  * 服务信息: 包含服务名称和服务对象的信息
- * @author pao
  */
 @addon('ServiceInfo', '服务信息', '包含服务名称和服务对象的信息')
 export class ServiceInfo {
@@ -153,7 +142,6 @@ export class ServiceInfo {
 }
 /**
  * 注册服务列表
- * @author pao
  * @param serviceInfos 服务信息列表
  */
 export function registerServices(serviceInfos: ServiceInfo[]) {
@@ -163,7 +151,6 @@ export function registerServices(serviceInfos: ServiceInfo[]) {
 }
 /**
  * 注册服务
- * @author pao
  * @param serviceInfo 服务信息
  */
 export function registerService(serviceInfo: ServiceInfo) {
@@ -174,7 +161,6 @@ export function registerService(serviceInfo: ServiceInfo) {
 }
 
 /** 根据名称获取服务
- * @author pao
  * @param name 名称
  */
 export function getServiceByName(name: string) {
@@ -183,7 +169,6 @@ export function getServiceByName(name: string) {
 
 /** 
  * 令牌权限
- * @author pao
  */
 export type TokenAuth = { token: string, auth: boolean };
 
@@ -238,7 +223,6 @@ export class BaseService extends BaseAddon {
 /**
  * 名称:基础服务器
  * @description 所有服务器的基类，服务器是可以启动和停止的应用程序，服务器程序不应当阻塞主线程
- * @author pao
  */
 @addon('BaseServer', '基础服务器', '所有服务器的基类')
 export class BaseServer extends BaseAddon {

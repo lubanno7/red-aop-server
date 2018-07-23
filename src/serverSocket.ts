@@ -5,7 +5,6 @@ import { addon, log } from 'red-aop';
 /**
  * 名称:Socket 服务
  * @description 提供Socket透明传输的服务
- * @author pao
  */
 @addon('SocketServer', 'Socket 服务', '提供Socket透明传输的服务')
 export class SocketServer extends BaseServer {

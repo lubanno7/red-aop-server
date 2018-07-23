@@ -6,6 +6,7 @@ import * as path from 'path';
 import { ServerApplication } from './serverApp';
 import { remoteCallServiceHandler } from './serverRemote';
 import { addon, log } from "red-aop";
+import * as connecthistoryapifallback from "connect-history-api-fallback";
 
 let MongoStore = mongo(session);
 
@@ -27,6 +28,7 @@ export class ExpressApplication extends ServerApplication {
 
         log('app', '设定静态目录');
         // 静态目录设定
+        app.use(connecthistoryapifallback());
         app.use(express.static(path.join(__dirname, '../../../build')));
 
         log('app', '过滤服务目录');

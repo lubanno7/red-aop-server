@@ -8,7 +8,6 @@ export let mainApplication: ServerApplication;
 /**
  * 名称:应用Session配置
  * @description 用于配置服务应用的Session
- * @author huyl
  */
 export class AppSession {
     /**
@@ -30,7 +29,6 @@ export class AppSession {
 
 /**
  * 服务应用
- * @author pao
  */
 @addon('ServerApplication', '服务应用设置', '包含各种资源的主服务应用实体对象')
 export class ServerApplication extends Application {

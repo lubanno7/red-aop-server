@@ -131,16 +131,14 @@ import {
     verify,
     sign,
     setCurrentUserToken,
-    UserInfo,
-    UserPasswordLoginService
+    UserInfo
 } from "./src/serverSecurity";
 
 export {
     verify,
     sign,
     setCurrentUserToken,
-    UserInfo,
-    UserPasswordLoginService
+    UserInfo
 };
 
 /**
@@ -149,3 +147,9 @@ export {
 import { SocketServer } from "./src/serverSocket";
 
 export { SocketServer };
+
+/**
+ * 9、用户服务导出
+ */
+import { UserPasswordLoginService } from "./src/serviveUser";
+export { UserPasswordLoginService };

@@ -10,10 +10,10 @@ import {
     throwError,
     ErrorStatus
 } from 'red-aop';
+import { mainApplication } from './serverApp';
 
 /**
  * 请求
- * @author pao
  * @param token 令牌
  * @param remoteRequest 远程请求
  * @returns 远程调用方法的结果
@@ -37,7 +37,6 @@ export function request(token: string, request: IRemoteRequest): any {
 
 /**
  * 远程调用服务响应
- * @author pao
  * @param req 请求
  * @param res 响应
  */
@@ -51,6 +50,29 @@ export function remoteCallServiceHandler(req: express.Request, res: express.Resp
         log('remote', `数据到达,url=${req.url}`);
         buffer.push(chunk);
     });
+
+    let errorFunc = (error: Error) => {
+        // 此处是在主线程运行，要确保不崩溃
+        try {
+            res.status(error.status || ErrorStatus.ERROR_SERVICE).send(`${error.message}`);
+            log('remote', `异常发送,url=${req.url}`);
+        } catch (error) {
+            log('remote', new Error(`数据响应时发生未知异常: ${error}`));
+        }
+    };
+
+    let responseFunc = (requestID: string, values: any) => {
+        // 此处是在主线程运行，要确保不崩溃
+        try {
+            let response = addonSerialize({
+                d: values
+            });
+            res.send(response);
+            log('remote', `响应发送,url=${req.url},id=${requestID}`);
+        } catch (error) {
+            log('remote', new Error(`数据响应时发生未知异常: ${error}`));
+        }
+    };
 
     // 在end事件触发后，通过querystring.parse将post解析为真正的POST请求格式，然后向客户端返回。
     req.on('end', function () {
@@ -71,25 +93,79 @@ export function remoteCallServiceHandler(req: express.Request, res: express.Resp
                 result.constructor.prototype.then) {
                 // 处理Promise
                 result.then((values: any) => {
-                    let response = addonSerialize({
-                        d: values
-                    });
-                    res.send(response);
+                    // 此处是异步返回，必须try-catch，否则有崩溃风险
+                    try {
+                        // 此处恢复当前用户
+                        setCurrentUserToken(requestObj.userToken);
+                        responseFunc(requestObj.id, values);
+                    } catch (error) {
+                        errorFunc(error);
+                    }
                 }).catch((error: Error) => {
-                    res.status(error.status || ErrorStatus.ERROR_SERVICE).send(`${error.message}`);
-                    log('remote', `异常发送,url=${req.url}`);
+                    // 此处恢复当前用户
+                    setCurrentUserToken(requestObj.userToken);
+                    errorFunc(error);
                 });
             } else {
                 // 处理非Promise
-                let response = addonSerialize({
-                    d: result
-                });
-                res.send(response);
+                responseFunc(requestObj.id, result);
             }
-            log('remote', `响应发送,url=${req.url},id=${requestObj.id}`);
         } catch (error) {
-            res.status(error.status || ErrorStatus.ERROR_SERVICE).send(`${error.message}`);
-            log('remote', `异常发送,url=${req.url}`);
+            errorFunc(error);
         }
     });
+}
+
+/**
+ * Session工具类
+ */
+export class SessionUtil {
+    /** Session 工具类 */
+    constructor(public args: IArguments) {
+
+    }
+    /** 请求 */
+    public get req(): express.Request {
+        return <express.Request>(this.args[this.args.length - 1]);
+    }
+    /**
+     * 设置Session
+     * @param key 关键字
+     * @param value 值
+     */
+    setSession?(key: string, value: any) {
+        // 没有配置Session
+        if (!mainApplication.sessionConfig) { return; }
+        this.req.session[key] = value;
+        this.req.session.save(error => {
+            if (error) {
+                console.log('设置Session [${key}] 异常:' + error.stack);
+                throw new Error(`设置Session [${key}] 异常`);
+            }
+        });
+    }
+    /**
+     * 获取Session
+     * @param key 关键字
+     */
+    getSession?(key: string) {
+        // 没有配置Session
+        if (!mainApplication.sessionConfig) { return undefined; }
+        return this.req.session[key];
+    }
+    /**
+     * 销毁Session
+     * @param key 关键字
+     */
+    destroySession?(key: string) {
+        // 没有配置Session
+        if (!mainApplication.sessionConfig) { return; }
+        this.req.session[key] = undefined;
+        this.req.session.save(error => {
+            if (error) {
+                console.log('设置Session [${key}] 异常:' + error.stack);
+                throw new Error(`设置Session [${key}] 异常`);
+            }
+        });
+    }
 }
