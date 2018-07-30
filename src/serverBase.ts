@@ -8,6 +8,7 @@ import {
     throwError,
     ErrorStatus
 } from 'red-aop';
+import { setCurrentUserToken } from './serverSecurity';
 
 /**
  * 默认文件编码器
@@ -211,6 +212,8 @@ export class BaseService extends BaseAddon {
         let that = this;
         // 验证令牌权限
         return (this.checkTokenAuth(token, functionName, args) as Promise<TokenAuth>).then((check) => {
+            // 设置当前用户
+            setCurrentUserToken(token);
             if (check.auth) {
                 return that[functionName].apply(that, args);
             } else {
